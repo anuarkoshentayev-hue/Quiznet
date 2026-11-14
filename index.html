@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Қазақстан тарихы — 4-ай, 2-апта (Онлайн Тест)</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        kzBlue: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        kzGold: {
+                            400: '#facc15',
+                            500: '#eab308',
+                            600: '#ca8a04',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom scrollbar for question grid */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 8px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 8px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        .fade-in {
+            animation: fadeIn 0.25s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col antialiased selection:bg-kzBlue-500 selection:text-white">
+
+    <!-- Top Navigation Bar -->
+    <header class="bg-gradient-to-r from-kzBlue-900 via-kzBlue-800 to-kzBlue-700 text-white shadow-md sticky top-0 z-30">
+        <div class="max-w-6xl mx-auto px-4 py-3.5 flex items-center justify-between">
+            <div class="flex items-center gap-3 cursor-pointer" onclick="goHome()">
+                <div class="w-10 h-10 rounded-xl bg-kzGold-400 text-kzBlue-900 flex items-center justify-center font-extrabold text-xl shadow-inner">
+                    <i class="ph-bold ph-book-open-text"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-base sm:text-lg leading-tight tracking-tight">Қазақстан тарихы</h1>
+                    <p class="text-xs text-kzBlue-100 font-medium">4-ай, 2-апта • Жаттауға арналған 135 тест</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-2">
+                <button id="homeBtn" onclick="goHome()" class="hidden px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-sm font-medium transition flex items-center gap-1.5">
+                    <i class="ph ph-house"></i>
+                    <span class="hidden sm:inline">Басты бет</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-1 max-w-6xl w-full mx-auto px-4 py-6 sm:py-8">
+
+        <!-- ==================== 1. HOME / SETUP SCREEN ==================== -->
+        <section id="homeScreen" class="fade-in space-y-6">
+            <!-- Hero Banner -->
+            <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200/80 relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-48 h-48 bg-gradient-to-br from-kzBlue-100/60 to-kzGold-400/20 rounded-bl-full -z-0 pointer-events-none"></div>
+                <div class="relative z-10 max-w-2xl">
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-kzBlue-50 text-kzBlue-700 border border-kzBlue-200 mb-3">
+                        <i class="ph-fill ph-sparkle text-kzGold-500"></i> ҰБТ-ға дайындық платформасы
+                    </span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-2">
+                        Тарихи деректерді тез әрі тиімді жаттаңыз!
+                    </h2>
+                    <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+                        Бөлімді таңдап, өзіңізге ыңғайлы режимде біліміңізді тексеріңіз. Барлық 135 сұрақ толық қамтылған.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Configuration Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <!-- Left Column: Section Selection -->
+                <div class="lg:col-span-7 bg-white rounded-2xl p-6 shadow-sm border border-slate-200/80">
+                    <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
+                        <i class="ph-duotone ph-folders text-kzBlue-600 text-xl"></i>
+                        1. Бөлімді таңдаңыз
+                    </h3>
+                    <div class="space-y-3" id="sectionList">
+                        <!-- Rendered via JS -->
+                    </div>
+                </div>
+
+                <!-- Right Column: Mode & Options -->
+                <div class="lg:col-span-5 flex flex-col gap-6">
+                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200/80 flex-1 flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
+                                <i class="ph-duotone ph-sliders-horizontal text-kzBlue-600 text-xl"></i>
+                                2. Режим мен баптаулар
+                            </h3>
+
+                            <!-- Mode Cards -->
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3 mb-5">
+                                <label class="cursor-pointer relative">
+                                    <input type="radio" name="quizMode" value="practice" class="peer sr-only" checked>
+                                    <div class="p-4 rounded-xl border-2 border-slate-200 peer-checked:border-kzBlue-600 peer-checked:bg-kzBlue-50/50 transition hover:border-slate-300">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="font-bold text-slate-900 flex items-center gap-2">
+                                                <i class="ph-fill ph-student text-kzBlue-600 text-lg"></i> Жаттығу режимі
+                                            </span>
+                                            <span class="text-xs font-semibold px-2 py-0.5 rounded bg-emerald-100 text-emerald-700">Оқу</span>
+                                        </div>
+                                        <p class="text-xs text-slate-600">Жауапты басқан бойда дұрыс/бұрыстығын бірден көрсетеді.</p>
+                                    </div>
+                                </label>
+
+                                <label class="cursor-pointer relative">
+                                    <input type="radio" name="quizMode" value="exam" class="peer sr-only">
+                                    <div class="p-4 rounded-xl border-2 border-slate-200 peer-checked:border-kzBlue-600 peer-checked:bg-kzBlue-50/50 transition hover:border-slate-300">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="font-bold text-slate-900 flex items-center gap-2">
+                                                <i class="ph-fill ph-exam text-kzGold-600 text-lg"></i> Емтихан режимі
+                                            </span>
+                                            <span class="text-xs font-semibold px-2 py-0.5 rounded bg-amber-100 text-amber-800">Таймер</span>
+                                        </div>
+                                        <p class="text-xs text-slate-600">Уақыт жүреді, нәтиже мен қателер тесті аяқтаған соң көрінеді.</p>
+                                    </div>
+                                </label>
+                            </div>
+
+                            <!-- Shuffle Toggles -->
+                            <div class="space-y-3 pt-3 border-t border-slate-100">
+                                <label class="flex items-center justify-between cursor-pointer p-2 rounded-lg hover:bg-slate-50">
+                                    <span class="text-sm font-medium text-slate-700 flex items-center gap-2">
+                                        <i class="ph ph-shuffle text-slate-500 text-lg"></i> Сұрақтар ретін араластыру
+                                    </span>
+                                    <input type="checkbox" id="shuffleQuestions" class="w-5 h-5 rounded text-kzBlue-600 focus:ring-kzBlue-500 border-slate-300">
+                                </label>
+                                <label class="flex items-center justify-between cursor-pointer p-2 rounded-lg hover:bg-slate-50">
+                                    <span class="text-sm font-medium text-slate-700 flex items-center gap-2">
+                                        <i class="ph ph-arrows-left-right text-slate-500 text-lg"></i> Жауап нұсқаларын араластыру
+                                    </span>
+                                    <input type="checkbox" id="shuffleOptions" class="w-5 h-5 rounded text-kzBlue-600 focus:ring-kzBlue-500 border-slate-300">
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Start Button -->
+                        <button onclick="startQuiz()" class="mt-6 w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-kzBlue-600 to-kzBlue-700 hover:from-kzBlue-700 hover:to-kzBlue-800 text-white font-bold text-base shadow-lg shadow-kzBlue-600/25 active:scale-[0.99] transition flex items-center justify-center gap-2">
+                            <span>Тестті бастау</span>
+                            <i class="ph-bold ph-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== 2. QUIZ SCREEN ==================== -->
+        <section id="quizScreen" class="hidden fade-in space-y-5">
+            <!-- Top Status Bar -->
+            <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200/80 flex flex-wrap items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                    <span id="quizBadge" class="px-3 py-1 rounded-lg text-xs font-bold bg-kzBlue-100 text-kzBlue-800">
+                        Жаттығу режимі
+                    </span>
+                    <span id="sectionTitleDisplay" class="text-xs sm:text-sm font-medium text-slate-600 truncate max-w-[200px] sm:max-w-xs">
+                        Барлық сұрақтар
+                    </span>
+                </div>
+
+                <div class="flex items-center gap-4 ml-auto">
+                    <!-- Timer (Visible in Exam mode) -->
+                    <div id="timerBox" class="hidden items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-50 border border-amber-200 text-amber-800 font-mono font-bold text-sm">
+                        <i class="ph-bold ph-timer text-amber-600"></i>
+                        <span id="timerText">00:00</span>
+                    </div>
+
+                    <!-- Counter -->
+                    <div class="text-sm font-bold text-slate-700 bg-slate-100 px-3 py-1.5 rounded-xl">
+                        <span id="currentNumText" class="text-kzBlue-600">1</span> / <span id="totalNumText">135</span>
+                    </div>
+
+                    <!-- Finish Early Button -->
+                    <button onclick="openFinishModal()" class="px-3.5 py-1.5 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-700 font-semibold text-xs sm:text-sm border border-rose-200 transition">
+                        Аяқтау
+                    </button>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                    <div id="progressBar" class="bg-gradient-to-r from-kzBlue-500 to-kzGold-400 h-full transition-all duration-300" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <!-- Main Quiz Content Layout -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+                <!-- Question Card -->
+                <div class="lg:col-span-8 bg-white rounded-2xl p-5 sm:p-7 shadow-sm border border-slate-200/80">
+                    <div class="flex items-center justify-between gap-2 mb-3">
+                        <span id="originalQNum" class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Сұрақ №1</span>
+                        <span id="questionCategoryTag" class="text-xs font-medium text-kzBlue-600 bg-kzBlue-50 px-2.5 py-0.5 rounded-md">I бөлім</span>
+                    </div>
+
+                    <h2 id="questionText" class="text-lg sm:text-xl font-bold text-slate-900 leading-snug mb-6">
+                        Сұрақ мәтіні осында жүктеледі...
+                    </h2>
+
+                    <!-- Options Container -->
+                    <div id="optionsContainer" class="space-y-3">
+                        <!-- Options rendered via JS -->
+                    </div>
+
+                    <!-- Feedback Box (Practice Mode) -->
+                    <div id="feedbackBox" class="hidden mt-5 p-4 rounded-xl border text-sm font-medium flex items-start gap-3">
+                        <i id="feedbackIcon" class="text-xl mt-0.5"></i>
+                        <div>
+                            <p id="feedbackTitle" class="font-bold"></p>
+                            <p id="feedbackDesc" class="text-xs mt-0.5 opacity-90"></p>
+                        </div>
+                    </div>
+
+                    <!-- Navigation Buttons -->
+                    <div class="mt-7 pt-5 border-t border-slate-100 flex items-center justify-between gap-3">
+                        <button id="prevBtn" onclick="prevQuestion()" class="px-4 py-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-700 font-semibold text-sm transition flex items-center gap-2 disabled:opacity-40 disabled:pointer-events-none">
+                            <i class="ph-bold ph-arrow-left"></i> Алдыңғы
+                        </button>
+
+                        <button id="nextBtn" onclick="nextQuestion()" class="px-5 py-2.5 rounded-xl bg-kzBlue-600 hover:bg-kzBlue-700 text-white font-semibold text-sm shadow-sm transition flex items-center gap-2">
+                            <span>Келесі</span> <i class="ph-bold ph-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Right Sidebar: Question Navigator Grid -->
+                <div class="lg:col-span-4 bg-white rounded-2xl p-5 shadow-sm border border-slate-200/80">
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="font-bold text-slate-800 text-sm flex items-center gap-1.5">
+                            <i class="ph-duotone ph-squares-four text-kzBlue-600 text-lg"></i> Сұрақтар картасы
+                        </h3>
+                        <span id="answeredCountBadge" class="text-xs font-semibold text-slate-500">0 / 135</span>
+                    </div>
+
+                    <!-- Legend -->
+                    <div class="flex flex-wrap gap-3 text-[11px] text-slate-500 mb-3 pb-2 border-b border-slate-100">
+                        <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-sm bg-kzBlue-600 inline-block"></span> Ағымдағы</span>
+                        <span id="legendCorrect" class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-sm bg-emerald-500 inline-block"></span> Дұрыс</span>
+                        <span id="legendWrong" class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-sm bg-rose-500 inline-block"></span> Қате</span>
+                        <span id="legendAnswered" class="hidden items-center gap-1"><span class="w-2.5 h-2.5 rounded-sm bg-sky-200 border border-sky-400 inline-block"></span> Белгіленген</span>
+                    </div>
+
+                    <div id="questionGrid" class="grid grid-cols-6 sm:grid-cols-8 lg:grid-cols-6 gap-1.5 max-h-[340px] overflow-y-auto pr-1">
+                        <!-- Grid buttons rendered via JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== 3. RESULTS SCREEN ==================== -->
+        <section id="resultScreen" class="hidden fade-in space-y-6">
+            <!-- Score Summary Card -->
+            <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200/80 text-center relative overflow-hidden">
+                <div class="max-w-xl mx-auto">
+                    <div id="resultIconWrapper" class="w-20 h-20 rounded-2xl mx-auto mb-4 flex items-center justify-center text-4xl shadow-sm bg-kzBlue-50 text-kzBlue-600">
+                        <i class="ph-fill ph-trophy"></i>
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-1">Тест аяқталды!</h2>
+                    <p id="resultSubtitle" class="text-slate-500 text-sm mb-6">Сіздің нәтижеңіз төменде көрсетілген</p>
+
+                    <!-- Stats Grid -->
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-7">
+                        <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200/70">
+                            <div class="text-xs text-slate-500 font-medium mb-1">Жалпы ұпай</div>
+                            <div id="statScore" class="text-xl font-extrabold text-slate-900">0 / 0</div>
+                        </div>
+                        <div class="p-3.5 rounded-xl bg-kzBlue-50 border border-kzBlue-200/70">
+                            <div class="text-xs text-kzBlue-700 font-medium mb-1">Пайыздық көрсеткіш</div>
+                            <div id="statPercent" class="text-xl font-extrabold text-kzBlue-700">0%</div>
+                        </div>
+                        <div class="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200/70">
+                            <div class="text-xs text-emerald-700 font-medium mb-1">Дұрыс жауап</div>
+                            <div id="statCorrect" class="text-xl font-extrabold text-emerald-600">0</div>
+                        </div>
+                        <div class="p-3.5 rounded-xl bg-rose-50 border border-rose-200/70">
+                            <div class="text-xs text-rose-700 font-medium mb-1">Қате / Жауапсыз</div>
+                            <div id="statWrong" class="text-xl font-extrabold text-rose-600">0</div>
+                        </div>
+                    </div>
+
+                    <div id="timeTakenBanner" class="hidden mb-6 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-100 text-slate-700 text-xs font-semibold">
+                        <i class="ph-bold ph-clock"></i> Жұмсалған уақыт: <span id="finalTimeText">00:00</span>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="flex flex-wrap items-center justify-center gap-3">
+                        <button id="retryWrongBtn" onclick="retryWrongQuestions()" class="hidden px-5 py-3 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-sm shadow-md shadow-amber-500/20 transition flex items-center gap-2">
+                            <i class="ph-bold ph-arrow-counter-clockwise"></i> Қате сұрақтарды қайта тапсыру (<span id="wrongCountBtn">0</span>)
+                        </button>
+                        <button onclick="restartSameQuiz()" class="px-5 py-3 rounded-xl bg-kzBlue-600 hover:bg-kzBlue-700 text-white font-bold text-sm shadow-md shadow-kzBlue-600/20 transition flex items-center gap-2">
+                            <i class="ph-bold ph-arrows-clockwise"></i> Қайта бастау
+                        </button>
+                        <button onclick="goHome()" class="px-5 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-sm transition flex items-center gap-2">
+                            <i class="ph-bold ph-house"></i> Бөлім таңдау
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Review Section (Қатемен жұмыс және барлық жауаптар) -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200/80">
+                <div class="flex flex-wrap items-center justify-between gap-3 mb-5 pb-3 border-b border-slate-100">
+                    <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+                        <i class="ph-duotone ph-list-checks text-kzBlue-600 text-xl"></i> Жауаптарды талдау
+                    </h3>
+                    <div class="flex items-center gap-2">
+                        <button onclick="filterReview('all')" id="filterAllBtn" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-kzBlue-600 text-white transition">Барлығы</button>
+                        <button onclick="filterReview('wrong')" id="filterWrongBtn" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">Тек қателер</button>
+                    </div>
+                </div>
+
+                <div id="reviewContainer" class="space-y-4">
+                    <!-- Review cards rendered via JS -->
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Custom Confirmation Modal (No alert/confirm used!) -->
+    <div id="finishModal" class="hidden fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-xl border border-slate-200 fade-in">
+            <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center text-2xl mb-4">
+                <i class="ph-fill ph-warning-circle"></i>
+            </div>
+            <h3 class="text-lg font-bold text-slate-900 mb-1">Тестті аяқтағыңыз келе ме?</h3>
+            <p id="modalMessage" class="text-sm text-slate-600 mb-6">
+                Сіз барлық сұрақтарға жауап берген жоқсыз. Тестті қазір аяқтасаңыз, жауап берілмеген сұрақтар қате болып есептеледі.
+            </p>
+            <div class="flex items-center justify-end gap-3">
+                <button onclick="closeFinishModal()" class="px-4 py-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-700 font-semibold text-sm transition">
+                    Жалғастыру
+                </button>
+                <button onclick="confirmFinishQuiz()" class="px-4 py-2.5 rounded-xl bg-kzBlue-600 hover:bg-kzBlue-700 text-white font-semibold text-sm transition">
+                    Иә, аяқтау
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-4 mt-auto">
+        <div class="max-w-6xl mx-auto px-4 text-center text-xs text-slate-500">
+            Қазақстан тарихы • 4-ай, 2-апта тест жинағы (1–135 сұрақтар)
+        </div>
+    </footer>
+
+    <!-- Application Logic & Full 135 Questions Database -->
+    <script>
+        // =========================================================================
+        // 1. БАРЛЫҚ 135 СҰРАҚ МӘЛІМЕТТЕР БАЗАСЫ (ТОЛЫҚ НҰСҚА)
+        // =========================================================================
+        const ALL_QUESTIONS = [
+            // I. Қазақстандағы ұлттық автономиялар (1–39)
+            { id: 1, section: 1, q: "Түркістан өлкелік солдат, жұмысшы, шаруа, қырғыз және мұсылман депутаттарының ІІІ съезі Ташкентте қашан өтті?", options: ["1917 жылғы 15–22 қараша", "Мұхамеджан Тынышбаев", "1918 жылғы қаңтарда", "200 адам"], correct: 0 },
+            { id: 2, section: 1, q: "Түркістан өлкесінің Халық Комиссарлары Кеңесінің құрамына неше адам енді?", options: ["2 мың сарбаз", "1924 жылға дейін", "«Дашнакцутюн»", "14 адам"], correct: 3 },
+            { id: 3, section: 1, q: "Большевиктер фракциясының Декларациясы қашан қабылданды?", options: ["1917 жылғы 19 қараша", "1924 жылға дейін", "Жымпиты ауылы", "Ақпан революциясының"], correct: 0 },
+            { id: 4, section: 1, q: "Түркістан автономиясы (Түркістан мұхтариаты) қай күндері өткен съезде құрылды?", options: ["1917 жылғы 5–13 желтоқсандағы II Жалпықазақ съезінде", "1924 жылға дейін", "600 винтовка, 300 бердеңке, 20 мың патрон", "1917 жылғы 26–29 қараша"], correct: 3 },
+            { id: 5, section: 1, q: "IV төтенше мұсылман съезіне қанша адам қатысты?", options: ["1918 жылғы 29 қаңтарда", "1917 жылғы 19 қараша", "200 адам", "Әлихан Бөкейхан"], correct: 2 },
+            { id: 6, section: 1, q: "IV төтенше мұсылман съезін кім ашты?", options: ["Мұстафа Шоқай", "1918 жылғы 6–7 ақпанға қараған түні", "Мұхамеджан Тынышбаев", "Бөкей Ордасы, Орал, Торғай, Ақмола, Семей облыстары"], correct: 0 },
+            { id: 7, section: 1, q: "Түркістан автономиясының Уақытша үкіметі қашан сайланды?", options: ["1917 жылғы 28 қараша", "Жаһанша Досмұхамедов", "Әлихан Бөкейхан", "600 винтовка, 300 бердеңке, 20 мың патрон"], correct: 0 },
+            { id: 8, section: 1, q: "Түркістан автономиясының орталығы қай қала болды?", options: ["Қоқан қаласы", "Атаман Анненков отряды", "«Дашнакцутюн»", "25 адам"], correct: 0 },
+            { id: 9, section: 1, q: "Түркістан автономиясының алғашқы үкімет басшысы кім болды?", options: ["600 винтовка, 300 бердеңке, 20 мың патрон", "Мұхамеджан Тынышбаев", "Ахмет Байтұрсынұлы", "Ойыл уәлаяты, Бөкей Ордасы, Ақтөбе және Ырғыз уездері"], correct: 1 },
+            { id: 10, section: 1, q: "М.Тынышбаевтан кейін үкімет басшысы болып кім тағайындалды?", options: ["Жаһанша Досмұхамедов", "1924 жылға дейін", "Мұхамеджан Тынышбаев", "Мұстафа Шоқай"], correct: 3 },
+            { id: 11, section: 1, q: "Мұстафа Шоқай Уақытша үкіметте қандай қызмет атқарды?", options: ["Төраға орынбасары және Сыртқы қатынастар бөлімінің меңгерушісі", "Жаһанша Досмұхамедов", "25 адам", "Мұстафа Шоқай"], correct: 0 },
+            { id: 12, section: 1, q: "Түркістан автономиясының жариялануын орынсыз деп қай съезд таныды?", options: ["Мұстафа Шоқай", "200 адам", "1918 жылғы қаңтарда", "1918 жылғы қаңтардағы Кеңестердің IV өлкелік съезі"], correct: 3 },
+            { id: 13, section: 1, q: "Қоқан қаласына Ташкенттен большевиктердің жазалаушы отряды қашан жіберілді?", options: ["1918 жылғы 6–7 ақпанға қараған түні", "14 адам", "Жаһанша Досмұхамедов", "1918 жылғы қаңтарда"], correct: 3 },
+            { id: 14, section: 1, q: "Түркістан автономиясын талқандауға қатысқан армян партиясы қалай аталды?", options: ["«Дашнакцутюн»", "1917 жылғы 15–22 қараша", "1918 жылғы сәуірде", "14 адам"], correct: 0 },
+            { id: 15, section: 1, q: "Автономияны қорғауға қазақтар мен өзбектерден жасақталған қанша сарбаз қатысты?", options: ["2 мың сарбаз", "Бөкей Ордасы, Орал, Торғай, Ақмола, Семей облыстары", "Отыншы Әлжанов", "Мұстафа Шоқай"], correct: 0 },
+            { id: 16, section: 1, q: "Қоқан стансысының қосалқы жолдарына 11 эшелон қай түні келді?", options: ["1918 жылғы сәуірде", "1918 жылғы 6–7 ақпанға қараған түні", "Атаман Анненков отряды", "1918 жылғы 5–6 ақпанға қараған түні"], correct: 3 },
+            { id: 17, section: 1, q: "Жазалаушы отряд Қоқан қаласын қай күні басып алды?", options: ["Семей қаласы", "1918 жылғы 29 қаңтарда", "1917 жылғы 21–26 шілдеде", "10 адам"], correct: 1 },
+            { id: 18, section: 1, q: "Қоқанды большевиктер қай түні талқандады?", options: ["Жаһанша Досмұхамедов", "Мұстафа Шоқай", "1917 жылғы 19 қараша", "1918 жылғы 6–7 ақпанға қараған түні"], correct: 3 },
+            { id: 19, section: 1, q: "Түркістан АКСР-і қай жылы құрылды?", options: ["25 адам", "Ташкент", "1917 жылғы 19 қараша", "1918 жылғы сәуірде"], correct: 3 },
+            { id: 20, section: 1, q: "Түркістан АКСР-і қай жылға дейін өмір сүрді?", options: ["1924 жылға дейін", "Әлихан Бөкейхан", "1917 жылғы 26–29 қараша", "Қоқан қаласы"], correct: 0 },
+            { id: 21, section: 1, q: "Түркістан АКСР-інің астанасы қай қала болды?", options: ["Атаман Анненков отряды", "Ташкент", "600 винтовка, 300 бердеңке, 20 мың патрон", "2 мың сарбаз"], correct: 1 },
+            { id: 22, section: 1, q: "Алаш автономиясы қай съезде құрылды?", options: ["1917 жылғы 5–13 желтоқсандағы II Жалпықазақ съезінде", "14 адам", "1918 жылғы тамызда", "25 адам"], correct: 0 },
+            { id: 23, section: 1, q: "Алашорда үкіметінің негізгі орталығы қай қала болды?", options: ["1917 жылғы 5–13 желтоқсандағы II Жалпықазақ съезінде", "Семей қаласы", "1924 жылға дейін", "600 винтовка, 300 бердеңке, 20 мың патрон"], correct: 1 },
+            { id: 24, section: 1, q: "Алашорда халық кеңесі неше адамнан тұрды?", options: ["Ахмет Байтұрсынұлы", "Ташкент", "Жаһанша Досмұхамедов", "25 адам"], correct: 3 },
+            { id: 25, section: 1, q: "Алашорда үкіметінің төрағасы кім болды?", options: ["1917 жылғы 19 қараша", "1917 жылғы 26–29 қараша", "Әлихан Бөкейхан", "Ташкент"], correct: 2 },
+            { id: 26, section: 1, q: "Алашорданың Батыс бөлімшесінің орталығы қайда орналасты?", options: ["Жымпиты ауылы", "Мұстафа Шоқай", "1918 жылғы қаңтардағы Кеңестердің IV өлкелік съезі", "1918 жылғы тамызда"], correct: 0 },
+            { id: 27, section: 1, q: "Алашорданың Батыс бөлімшесін кім басқарды?", options: ["Ақпан революциясының", "14 адам", "Жаһанша Досмұхамедов", "Мұхамеджан Тынышбаев"], correct: 2 },
+            { id: 28, section: 1, q: "Торғай бөлімшесінің жетекшісі кім болды?", options: ["«Дашнакцутюн»", "Ахмет Байтұрсынұлы", "1917 жылғы 21–26 шілдеде", "1918 жылғы 5–6 ақпанға қараған түні"], correct: 1 },
+            { id: 29, section: 1, q: "Алаш автономиясына кіруі тиіс негізгі облыстарды атаңыз.", options: ["Бөкей Ордасы, Орал, Торғай, Ақмола, Семей облыстары", "Ойыл уәлаяты, Бөкей Ордасы, Ақтөбе және Ырғыз уездері", "Семей қаласы", "«Дашнакцутюн»"], correct: 0 },
+            { id: 30, section: 1, q: "Алашорда Уақытша халықтық кеңесінің құрамында басқа халық өкілдері нешеу болды?", options: ["10 адам", "25 адам", "Семей қаласы", "Жымпиты ауылы"], correct: 0 },
+            { id: 31, section: 1, q: "Алашорда үкіметі төрағалығына жасырын сайлауда 40 дауыс жинаған кім?", options: ["Әлихан Бөкейхан", "Мұстафа Шоқай", "1917 жылғы 15–22 қараша", "Бөкей Ордасы, Орал, Торғай, Ақмола, Семей облыстары"], correct: 0 },
+            { id: 32, section: 1, q: "Алашорда Батыс бөлімшесінің құрамына кірген жерлер қандай?", options: ["Әлихан Бөкейхан", "1917 жылғы 28 қараша", "Ойыл уәлаяты, Бөкей Ордасы, Ақтөбе және Ырғыз уездері", "Атаман Анненков отряды"], correct: 2 },
+            { id: 33, section: 1, q: "Алаш қайраткерлері қандай революцияның демократиялық принциптерін қорғады?", options: ["Отыншы Әлжанов", "Мұстафа Шоқай", "Ақпан революциясының", "1918 жылғы қазанда"], correct: 2 },
+            { id: 34, section: 1, q: "Алашорда Самара қаласынан қандай көмек алды?", options: ["1917 жылғы 15–22 қараша", "600 винтовка, 300 бердеңке, 20 мың патрон", "Әлихан Бөкейхан", "2 мың сарбаз"], correct: 1 },
+            { id: 35, section: 1, q: "Жетісуда Алаш милициясын құруға белсене араласқан қайраткер кім?", options: ["Отыншы Әлжанов", "600 винтовка, 300 бердеңке, 20 мың патрон", "Әлихан Бөкейхан", "1918 жылғы қаңтарда"], correct: 0 },
+            { id: 36, section: 1, q: "Отыншы Әлжанов қай жылы большевиктермен күресте қаза тапты?", options: ["1918 жылғы тамызда", "«Дашнакцутюн»", "Ақпан революциясының", "Семей қаласы"], correct: 0 },
+            { id: 37, section: 1, q: "Колчак үкіметі Алашорда қызметіне қай жылы тыйым салды?", options: ["Отыншы Әлжанов", "Қоқан қаласы", "1918 жылғы қазанда", "25 адам"], correct: 2 },
+            { id: 38, section: 1, q: "Қазақ халқына ерекше қатігездік танытқан атаманның отряды қалай аталды?", options: ["1917 жылғы 21–26 шілдеде", "1918 жылғы 29 қаңтарда", "1917 жылғы 28 қараша", "Атаман Анненков отряды"], correct: 3 },
+            { id: 39, section: 1, q: "«Алаш» партиясы құрылған І Жалпықазақ съезі қашан өтті?", options: ["1917 жылғы 21–26 шілдеде", "1917 жылғы 28 қараша", "1918 жылғы тамызда", "Төраға орынбасары және Сыртқы қатынастар бөлімінің меңгерушісі"], correct: 0 },
+
+            // II. Қазақ АКСР-інің құрылуы және аумақтық қалыптасуы (40–76)
+            { id: 40, section: 2, q: "Қырғыз (Қазақ) өлкесін басқару жөніндегі революциялық комитет қашан құрылды?", options: ["Ақмешіт, Қазалы, Шымкент, Түркістан уездері", "Кеңес үкіметі Алаш автономиясын тануға мүдделі болмады", "1919 жылғы 10 шілдеде", "1925 жылы"], correct: 2 },
+            { id: 41, section: 2, q: "Қазревкомның алғашқы төрағасы кім болды?", options: ["С.Пестковский", "1922 жылғы желтоқсанда", "«Ұшқын» газеті", "Қара Қырғыз автономиялы облысы"], correct: 0 },
+            { id: 42, section: 2, q: "Қазревкомның негізгі міндеті қандай болды?", options: ["1919 жылғы 4 қарашада", "Семей, Ақмола, Торғай, Орал облыстары", "Қырғыз (Қазақ) АКСР-ін құруға дайындық жүргізу", "Орынбор"], correct: 2 },
+            { id: 43, section: 2, q: "Қазревкомның баспасөз органы қандай газет болды?", options: ["Ақмешіт, Қазалы, Шымкент, Түркістан уездері", "1920 жылғы 4–12 қазанда", "«Ұшқын» газеті", "Қара Қырғыз автономиялы облысы"], correct: 2 },
+            { id: 44, section: 2, q: "1918 жылы наурызда Ә.Бөкейхан мен Х.Ғаббасов кіммен телеграф арқылы келіссөз жүргізді?", options: ["В.И.Ленинмен", "1937 жылға дейін", "Алматы", "1925 жылы"], correct: 0 },
+            { id: 45, section: 2, q: "Алаш автономиясын тану туралы келіссөздер неге нәтижесіз болды?", options: ["Қызылорда", "Алматы", "Семей, Ақмола, Торғай, Орал облыстары", "Кеңес үкіметі Алаш автономиясын тануға мүдделі болмады"], correct: 3 },
+            { id: 46, section: 2, q: "Алашорда мүшелеріне кешірім жасау туралы жарлық қашан жарияланды?", options: ["Кеңес үкіметі Алаш автономиясын тануға мүдделі болмады", "1919 жылғы 4 қарашада", "Ақмешіт, Қазалы, Шымкент, Түркістан уездері", "В.Радус-Зенькович"], correct: 1 },
+            { id: 47, section: 2, q: "Алашорданы тарату туралы Қазревком шешімі қашан қабылданды?", options: ["1919 жылғы 4 қарашада", "1920 жылғы 9 наурызда", "Орынбор, Қызылорда, Алматы", "1937 жылға дейін"], correct: 1 },
+            { id: 48, section: 2, q: "Қырғыз АКСР-ын құру туралы декрет қашан шықты?", options: ["Ақмешіт, Қазалы, Шымкент, Түркістан уездері", "Украина КСР-і, Беларусь КСР-і, Закавказье КФСР-і және РКФСР", "Кеңес үкіметі Алаш автономиясын тануға мүдделі болмады", "1920 жылғы 26 тамызда"], correct: 3 },
+            { id: 49, section: 2, q: "Қырғыз (Қазақ) АКСР Кеңестерінің Құрылтай съезі Орынборда қашан өтті?", options: ["1922 жылғы желтоқсанда", "Кеңес үкіметі Алаш автономиясын тануға мүдделі болмады", "В.Радус-Зенькович", "1920 жылғы 4–12 қазанда"], correct: 3 },
+            { id: 50, section: 2, q: "Құрылтай съезіне Қазақстан облыстарынан қанша депутат қатысты?", options: ["273 депутат", "6 делегат", "Сейітқали Меңдешев", "Алматы"], correct: 0 },
+            { id: 51, section: 2, q: "Алтай губерниясының қазақтарынан Құрылтай съезіне қанша делегат қатысты?", options: ["1937 жылға дейін", "1925 жылы", "Қызылорда", "6 делегат"], correct: 3 },
+            { id: 52, section: 2, q: "Қазақ АКСР-інің ОАК төрағасы болып кім сайланды?", options: ["2,7 млн шаршы шақырым", "Сейітқали Меңдешев", "1925 жылы", "Одақтас республика дәрежесіне көтерілді"], correct: 1 },
+            { id: 53, section: 2, q: "Қазақ АКСР ХКК төрағасы болып кім сайланды?", options: ["273 депутат", "1920 жылғы 9 наурызда", "Алматы", "В.Радус-Зенькович"], correct: 3 },
+            { id: 54, section: 2, q: "Қазақ АКСР-інің негізгі мемлекеттік құжаты қалай аталды?", options: ["2,7 млн шаршы шақырым", "«Қазақ АКСР-і еңбекшілері құқықтарының декларациясы»", "Қара Қырғыз автономиялы облысы", "Ақмешіт (Қазіргі Қызылорда)"], correct: 1 },
+            { id: 55, section: 2, q: "Қазақ АКСР-і еңбекшілері құқықтарының декларациясы қай жылға дейін конституция қызметін атқарды?", options: ["1924–1925 жылдары", "1937 жылға дейін", "1920 жылғы 9 наурызда", "Украина КСР-і, Беларусь КСР-і, Закавказье КФСР-і және РКФСР"], correct: 1 },
+            { id: 56, section: 2, q: "КСРО қашан құрылды?", options: ["Орынбор", "1922 жылғы желтоқсанда", "Қара Қырғыз автономиялы облысы", "С.Пестковский"], correct: 1 },
+            { id: 57, section: 2, q: "КСРО-ның алғашқы құрамына қандай төрт республика кірді?", options: ["5 млн 230 мың адам", "Ә.Бөкейхан, Т.Рысқұлов, С.Қожанов, Ә.Ермеков", "Украина КСР-і, Беларусь КСР-і, Закавказье КФСР-і және РКФСР", "«Қазақ АКСР-і еңбекшілері құқықтарының декларациясы»"], correct: 2 },
+            { id: 58, section: 2, q: "1920 жылы Қазақ АКСР-інің құрамына кірген төрт облысты атаңыз.", options: ["Қызылорда", "1925 жылғы 15–19 сәуірде", "1919 жылғы 10 шілдеде", "Семей, Ақмола, Торғай, Орал облыстары"], correct: 3 },
+            { id: 59, section: 2, q: "1920–1924 жылдары Қырғыз АКСР-інің астанасы қай қала болды?", options: ["5 млн 230 мың адам", "Орынбор", "1919 жылғы 10 шілдеде", "В.Радус-Зенькович"], correct: 1 },
+            { id: 60, section: 2, q: "1924–1925 жылдары Қырғыз АКСР-інің астанасы қай қала болды?", options: ["5 млн 230 мың адам", "Орынбор", "Ақмешіт (Қазіргі Қызылорда)", "С.Пестковский"], correct: 2 },
+            { id: 61, section: 2, q: "1925–1929 жылдары Қазақ АКСР-інің астанасы қай қала болды?", options: ["Қызылорда", "1920 жылғы 26 тамызда", "Қара Қырғыз автономиялы облысы", "Кеңес үкіметі Алаш автономиясын тануға мүдделі болмады"], correct: 0 },
+            { id: 62, section: 2, q: "1929 жылдан бастап Қазақстан астанасы қай қала болды?", options: ["«Ұшқын» газеті", "Алматы", "Одақтас республика дәрежесіне көтерілді", "Орынбор"], correct: 1 },
+            { id: 63, section: 2, q: "Қырғыз АКСР-і атауы Қазақ АКСР-і болып қашан өзгертілді?", options: ["С.Пестковский", "Алматы", "1925 жылғы 15–19 сәуірде", "1919 жылғы 10 шілдеде"], correct: 2 },
+            { id: 64, section: 2, q: "Ақмешіт қаласының атауы Қызылорда болып қашан өзгертілді?", options: ["1920 жылғы 26 тамызда", "1920 жылғы 9 наурызда", "1920 жылғы 4–12 қазанда", "1925 жылы"], correct: 3 },
+            { id: 65, section: 2, q: "Орта Азияны ұлттық-аумақтық межелеу қай жылдары жүргізілді?", options: ["В.И.Ленинмен", "1924–1925 жылдары", "1919 жылғы 10 шілдеде", "Орынбор"], correct: 1 },
+            { id: 66, section: 2, q: "Қырғыз АКСР құрамына Түркістан Республикасынан қандай облыстар қосылды?", options: ["5 млн 230 мың адам", "Сырдария және Жетісу облыстары", "С.Пестковский", "Ақмешіт, Қазалы, Шымкент, Түркістан уездері"], correct: 1 },
+            { id: 67, section: 2, q: "ҚАКСР құрамында қандай автономиялық облыс құрылды?", options: ["Қарақалпақ автономиялық облысы", "«Қазақ АКСР-і еңбекшілері құқықтарының декларациясы»", "Ақмешіт (Қазіргі Қызылорда)", "Қара Қырғыз автономиялы облысы"], correct: 0 },
+            { id: 68, section: 2, q: "РКФСР құрамында қандай автономиялық облыс құрылды?", options: ["273 депутат", "1924–1925 жылдары", "Кеңес үкіметі Алаш автономиясын тануға мүдделі болмады", "Қара Қырғыз автономиялы облысы"], correct: 3 },
+            { id: 69, section: 2, q: "1924 жылғы межелеу нәтижесінде Қазақстанға қосылған уездерден төртеуін атаңыз.", options: ["В.Радус-Зенькович", "5 млн 230 мың адам", "Ақмешіт, Қазалы, Шымкент, Түркістан уездері", "1920 жылғы 9 наурызда"], correct: 2 },
+            { id: 70, section: 2, q: "1924 жылғы межелеуден кейін Қазақстанның жер көлемі қанша болды?", options: ["2,7 млн шаршы шақырым", "С.Пестковский", "6 делегат", "1919 жылғы 10 шілдеде"], correct: 0 },
+            { id: 71, section: 2, q: "1924 жылғы межелеуден кейін Қазақстан халқының саны қанша болды?", options: ["5 млн 230 мың адам", "Ақмешіт, Қазалы, Шымкент, Түркістан уездері", "Одақтас республика дәрежесіне көтерілді", "1925 жылы"], correct: 0 },
+            { id: 72, section: 2, q: "Қазақ жерлерін біріктіруге зор үлес қосқан қайраткерлерді атаңыз.", options: ["1922 жылғы желтоқсанда", "Ә.Бөкейхан, Т.Рысқұлов, С.Қожанов, Ә.Ермеков", "6 делегат", "1920 жылғы 26 тамызда"], correct: 1 },
+            { id: 73, section: 2, q: "1926 жылғы халық санағы бойынша қазақтардың үлесі қанша болды?", options: ["61,3%", "Одақтас республика дәрежесіне көтерілді", "Семей, Ақмола, Торғай, Орал облыстары", "1920 жылғы 26 тамызда"], correct: 0 },
+            { id: 74, section: 2, q: "Қазақ АКСР-інің астаналары қандай қалалар болды?", options: ["5 млн 230 мың адам", "Орынбор", "С.Пестковский", "Орынбор, Қызылорда, Алматы"], correct: 3 },
+            { id: 75, section: 2, q: "1936 жылғы КСРО Конституциясы бойынша Қазақстанның мәртебесі қалай өзгерді?", options: ["Одақтас республика дәрежесіне көтерілді", "Ақмешіт, Қазалы, Шымкент, Түркістан уездері", "«Қазақ АКСР-і еңбекшілері құқықтарының декларациясы»", "«Ұшқын» газеті"], correct: 0 },
+            { id: 76, section: 2, q: "Қазақ КСР Конституциясы қай жылы қабылданды?", options: ["Орынбор, Қызылорда, Алматы", "1937 жылы", "Одақтас республика дәрежесіне көтерілді", "Украина КСР-і, Беларусь КСР-і, Закавказье КФСР-і және РКФСР"], correct: 1 },
+
+            // III. «Әскери коммунизм», ашаршылық және ЖЭС (77–110)
+            { id: 77, section: 3, q: "«Әскери коммунизм» саясаты қай жылдары жүргізілді?", options: ["Тамақтандыру пункттері", "Түркістан АКСР Кеңестерінің IX съезінде", "1924 жылдан бастап", "1918–1920 жылдары"], correct: 3 },
+            { id: 78, section: 3, q: "«Әскери коммунизм» саясаты қандай жағдайда енгізілді?", options: ["А.Розыбакиев пен О.Жандосов", "Тамақтандыру пункттері", "Азамат соғысы жылдарында", "Аштық жойылып, экономика жанданды"], correct: 2 },
+            { id: 79, section: 3, q: "Кеңестік Ресей экономикасын басқару үшін құрылған директивалық орган қалай аталды?", options: ["Өндіріс пен бөлуді орталықтандыру және ресурстарды мемлекет қолына шоғырландыру", "Национализация", "Орал, Орынбор, Ақтөбе, Бөкей, Қостанай губерниялары", "Халық Шаруашылығының Жоғарғы Кеңесі (ХШЖК)"], correct: 3 },
+            { id: 80, section: 3, q: "«Әскери коммунизм» саясатының негізгі міндеті қандай болды?", options: ["Өндіріс пен бөлуді орталықтандыру және ресурстарды мемлекет қолына шоғырландыру", "10,5 млн-нан астам", "Аштық жойылып, экономика жанданды", "Тыйым салынды"], correct: 0 },
+            { id: 81, section: 3, q: "Мемлекет қарамағына алу қалай аталады?", options: ["Национализация", "Астық пен басқа өнімдердің артық бөлігін мемлекетке өткізу", "Мөлшері алдын ала белгіленіп, артығын шаруалар өз еркімен пайдаланып немесе сата алды", "Тамақтандыру пункттері"], correct: 0 },
+            { id: 82, section: 3, q: "Ауыл шаруашылығындағы әскери коммунизмнің басты белгісі қандай болды?", options: ["Түркістан АКСР Кеңестерінің IX съезінде", "1921 жылы РКП(б)-ның X съезінде", "Азамат соғысы жылдарында", "Азық-түлік салғырты"], correct: 3 },
+            { id: 83, section: 3, q: "Азық-түлік салғыртының мәні неде?", options: ["10,5 млн-нан астам", "Астық пен басқа өнімдердің артық бөлігін мемлекетке өткізу", "1920 жылдардың басындағы жаппай аштық", "А.Розыбакиев пен О.Жандосов"], correct: 1 },
+            { id: 84, section: 3, q: "Азық-түлік салғырты қай жылдары жиналды?", options: ["Азық-түлік салғырты", "Жерді жалға беру мен алуға, жеке саудаға, жалдамалы еңбекті пайдалануға және несие алуға", "1919–1921 жылдары", "1924 жылдан бастап"], correct: 2 },
+            { id: 85, section: 3, q: "«Әскери коммунизм» кезінде ақшалай жалақының орнына не берілді?", options: ["Тамақтандыру пункттері", "10,5 млн-нан астам", "Азық-түлік салғырты", "Карточкалық «паек»"], correct: 3 },
+            { id: 86, section: 3, q: "«Әскери коммунизм» саясаты кезінде жеке саудаға және қолма-қол ақшаға қандай шара қолданылды?", options: ["Арнайы балалар үйіне және Орталық Ресейге жіберілді", "Ақмола, Көкшетау, Орал және басқа уездер", "Национализация", "Тыйым салынды"], correct: 3 },
+            { id: 87, section: 3, q: "Әскери коммунизм мен малды тартып алу салдарынан мал саны қаншаға кеміді?", options: ["Тоталитарлық режимге сәйкес келмегендіктен", "Азық-түлік салғырты", "10,5 млн-нан астам", "Өндіріс пен бөлуді орталықтандыру және ресурстарды мемлекет қолына шоғырландыру"], correct: 2 },
+            { id: 88, section: 3, q: "Қазақстандағы әскери коммунизм саясатының ең ауыр салдары қандай болды?", options: ["1921–1922 жылдары", "Арнайы балалар үйіне және Орталық Ресейге жіберілді", "1920 жылдардың басындағы жаппай аштық", "Мөлшері алдын ала белгіленіп, артығын шаруалар өз еркімен пайдаланып немесе сата алды"], correct: 2 },
+            { id: 89, section: 3, q: "Қазақстанда аштық қай жылдары болды?", options: ["1921–1922 жылдары", "Национализация", "Жетісу мен Оңтүстік Қазақстанда", "460 мың десятина"], correct: 0 },
+            { id: 90, section: 3, q: "1921 жылғы қарашада аштыққа ұшырағандар саны қаншаға жетті?", options: ["2 млн адамнан асты", "1921 жылы РКП(б)-ның X съезінде", "Еңбек міндеткерлігі", "460 мың десятина"], correct: 0 },
+            { id: 91, section: 3, q: "Аштыққа ұшыраған негізгі губернияларды атаңыз.", options: ["Еңбек міндеткерлігі", "Түркістан АКСР Кеңестерінің IX съезінде", "1924 жылдан бастап", "Орал, Орынбор, Ақтөбе, Бөкей, Қостанай губерниялары"], correct: 3 },
+            { id: 92, section: 3, q: "Солтүстік Қазақстандағы толқуларда көтерілісшілер саны қаншаға дейін жетті?", options: ["1924 жылдан бастап", "30 мың адам", "Карточкалық «паек»", "460 мың десятина"], correct: 1 },
+            { id: 93, section: 3, q: "1921 жылы ақпан–наурызда толқулар қай уездерді қамтыды?", options: ["30 мың адам", "1920 жылдардың басындағы жаппай аштық", "Жерді жалға беру мен алуға, жеке саудаға, жалдамалы еңбекті пайдалануға және несие алуға", "Ақмола, Көкшетау, Орал және басқа уездер"], correct: 3 },
+            { id: 94, section: 3, q: "Ашаршылықпен күресу үшін қандай орындар ашылды?", options: ["1924 жылдан бастап", "Тамақтандыру пункттері", "2 млн адамнан асты", "Аштық жойылып, экономика жанданды"], correct: 1 },
+            { id: 95, section: 3, q: "Аштық жылдары жетім балалар қайда орналастырылды?", options: ["1924 жылдан бастап", "Арнайы балалар үйіне және Орталық Ресейге жіберілді", "2 млн пұт астық", "1918–1920 жылдары"], correct: 1 },
+            { id: 96, section: 3, q: "Кеңестік Түркістан Қазақстанға қанша астық жіберді?", options: ["2 млн пұт астық", "Азамат соғысы жылдарында", "460 мың десятина", "Астық пен басқа өнімдердің артық бөлігін мемлекетке өткізу"], correct: 0 },
+            { id: 97, section: 3, q: "1921–1922 жылдары жер-су реформасы қай өңірлерде жүргізілді?", options: ["Түркістан АКСР Кеңестерінің IX съезінде", "Тыйым салынды", "10,5 млн-нан астам", "Жетісу мен Оңтүстік Қазақстанда"], correct: 3 },
+            { id: 98, section: 3, q: "Жер-су реформасын жүргізу туралы шешім қай съезде қабылданды?", options: ["Жерді жалға беру мен алуға, жеке саудаға, жалдамалы еңбекті пайдалануға және несие алуға", "Түркістан АКСР Кеңестерінің IX съезінде", "Тыйым салынды", "1921 жылы РКП(б)-ның X съезінде"], correct: 1 },
+            { id: 99, section: 3, q: "Жер-су реформасына белсене қатысқандар кімдер?", options: ["Тоталитарлық режимге сәйкес келмегендіктен", "Өндіріс пен бөлуді орталықтандыру және ресурстарды мемлекет қолына шоғырландыру", "А.Розыбакиев пен О.Жандосов", "Аштық жойылып, экономика жанданды"], correct: 2 },
+            { id: 100, section: 3, q: "Жетісуда 1916 жылғы көтерілісті басу кезінде тартып алынған қанша жер қазақтарға қайтарылды?", options: ["30 мың адам", "460 мың десятина", "Аштық жойылып, экономика жанданды", "Жерді жалға беру мен алуға, жеке саудаға, жалдамалы еңбекті пайдалануға және несие алуға"], correct: 1 },
+            { id: 101, section: 3, q: "1921 жылы кедейлердің қандай одағы құрылды?", options: ["Арнайы балалар үйіне және Орталық Ресейге жіберілді", "1919–1921 жылдары", "«Қосшы» одағы", "Азамат соғысы жылдарында"], correct: 2 },
+            { id: 102, section: 3, q: "ЖЭС қай жылы және қандай съезде қабылданды?", options: ["Жетісу мен Оңтүстік Қазақстанда", "Азық-түлік салғырты", "Аштық жойылып, экономика жанданды", "1921 жылы РКП(б)-ның X съезінде"], correct: 3 },
+            { id: 103, section: 3, q: "ЖЭС азық-түлік салғыртын немен алмастырды?", options: ["1921 жылы РКП(б)-ның X съезінде", "Азық-түлік салығымен", "Арнайы балалар үйіне және Орталық Ресейге жіберілді", "Жетісу мен Оңтүстік Қазақстанда"], correct: 1 },
+            { id: 104, section: 3, q: "Азық-түлік салығының басты айырмашылығы қандай болды?", options: ["Мөлшері алдын ала белгіленіп, артығын шаруалар өз еркімен пайдаланып немесе сата алды", "Карточкалық «паек»", "Азық-түлік салығымен", "Арнайы балалар үйіне және Орталық Ресейге жіберілді"], correct: 0 },
+            { id: 105, section: 3, q: "Азық-түлік салығы салғырттан қанша пайызға төмен болды?", options: ["30–50%-ға", "30 мың адам", "2 млн адамнан асты", "Еңбек міндеткерлігі"], correct: 0 },
+            { id: 106, section: 3, q: "Ақшалай салық қай жылдан бастап алына бастады?", options: ["1921 жылы РКП(б)-ның X съезінде", "1924 жылдан бастап", "Жерді жалға беру мен алуға, жеке саудаға, жалдамалы еңбекті пайдалануға және несие алуға", "Ақмола, Көкшетау, Орал және басқа уездер"], correct: 1 },
+            { id: 107, section: 3, q: "ЖЭС кезінде қандай еңбек жүйесі жойылды?", options: ["Орал, Орынбор, Ақтөбе, Бөкей, Қостанай губерниялары", "10,5 млн-нан астам", "Еңбек міндеткерлігі", "2 млн пұт астық"], correct: 2 },
+            { id: 108, section: 3, q: "ЖЭС кезінде қандай әрекеттерге рұқсат берілді?", options: ["Национализация", "А.Розыбакиев пен О.Жандосов", "Жерді жалға беру мен алуға, жеке саудаға, жалдамалы еңбекті пайдалануға және несие алуға", "«Қосшы» одағы"], correct: 2 },
+            { id: 109, section: 3, q: "ЖЭС нәтижесінде қандай өзгеріс болды?", options: ["2 млн пұт астық", "Азық-түлік салығымен", "Аштық жойылып, экономика жанданды", "Национализация"], correct: 2 },
+            { id: 110, section: 3, q: "ЖЭС не себепті тоқтатылды?", options: ["Мөлшері алдын ала белгіленіп, артығын шаруалар өз еркімен пайдаланып немесе сата алды", "Аштық жойылып, экономика жанданды", "Орал, Орынбор, Ақтөбе, Бөкей, Қостанай губерниялары", "Тоталитарлық режимге сәйкес келмегендіктен"], correct: 3 },
+
+            // IV. Қазақстандағы индустрияландыру (111–135)
+            { id: 111, section: 4, q: "Индустрияландыру дегеніміз не?", options: ["И.М. Губкин", "Ақмоламен", "Ақмола–Қарағанды, Елек–Орал, Рубцовск–Риддер", "Ірі, ауыр өнеркәсіпті құру және дамыту"], correct: 3 },
+            { id: 112, section: 4, q: "Индустрияландыруды бастау туралы шешім қай жылы және қай съезде қабылданды?", options: ["Шикізат өндіру", "Ірі, ауыр өнеркәсіпті құру және дамыту", "40 есеге", "1925 жылы партияның XIV съезінде"], correct: 3 },
+            { id: 113, section: 4, q: "Индустрияландырудың негізгі мақсаты қандай болды?", options: ["Ақмола–Қарағанды, Елек–Орал, Рубцовск–Риддер", "700 кәсіпорын", "Шикізат өндіру", "КСРО-ны аграрлық елден жетекші индустриялық державаға айналдыру"], correct: 3 },
+            { id: 114, section: 4, q: "Қазақстанда индустрияландырудың басталу кезеңінде қандай бағытқа басымдық берілді?", options: ["Шикізат өндіруге", "И. Голощёкин", "700 кәсіпорын", "Тұрар Рысқұлов"], correct: 0 },
+            { id: 115, section: 4, q: "Түркістан–Сібір теміржолы қай жылдары салынды?", options: ["Ірі теміржолдар, Қарағанды полиметалл комбинаттары және Қарағанды көмір кені", "40 есеге", "1927–1931 жылдары", "Ауыл шаруашылығы есебінен"], correct: 2 },
+            { id: 116, section: 4, q: "Түркістан–Сібір теміржолы қай жылы пайдалануға берілді?", options: ["1931 жылы", "Қарағанды–Балқаш", "1927–1931 жылдары", "И.С. Курнаков"], correct: 0 },
+            { id: 117, section: 4, q: "Петропавл–Көкшетау теміржолы қай жылы салынды?", options: ["КСРО-ны аграрлық елден жетекші индустриялық державаға айналдыру", "Шикізат өндіруге", "Ақмола–Қарағанды, Елек–Орал, Рубцовск–Риддер", "1927 жылы"], correct: 3 },
+            { id: 118, section: 4, q: "Петропавл–Көкшетау теміржолы 1931 жылы қай қаламен жалғасты?", options: ["Шикізат өндіру", "1933–1937 жылдар", "1927–1931 жылдары", "Ақмоламен"], correct: 3 },
+            { id: 119, section: 4, q: "Қазақстаннан шикізат тасымалдау үшін 1939 жылы қандай теміржолдар салынды?", options: ["И.М. Губкин", "Ірі теміржолдар, Қарағанды полиметалл комбинаттары және Қарағанды көмір кені", "Ақмола–Қарағанды, Елек–Орал, Рубцовск–Риддер", "Балқаш мыс балқыту, Шымкент қорғасын зауыты, Жезқазған, Қамбар және Алматы ет комбинаты"], correct: 2 },
+            { id: 120, section: 4, q: "1940 жылы іске қосылған теміржол желісі қандай?", options: ["Қарағанды–Балқаш", "Орталық Қазақстан", "Қ.И. Сәтбаев", "40 есеге"], correct: 0 },
+            { id: 121, section: 4, q: "Түрксіб құрылысының басты ұйымдастырушыларының бірі кім болды?", options: ["Орталық Қазақстан", "Тұрар Рысқұлов", "1927–1931 жылдары", "Балқаш мыс балқыту, Шымкент қорғасын зауыты, Жезқазған, Қамбар және Алматы ет комбинаты"], correct: 1 },
+            { id: 122, section: 4, q: "Түрксіб құрылысы қай жылы аяқталды?", options: ["1931 жылы", "Ірі теміржолдар, Қарағанды полиметалл комбинаттары және Қарағанды көмір кені", "1925 жылы партияның XIV съезінде", "Шикізат өндіруге"], correct: 0 },
+            { id: 123, section: 4, q: "Индустрияландырудың бірінші бесжылдығы қай жылдарды қамтыды?", options: ["1931 жылы", "Тұрар Рысқұлов", "Ақмола–Қарағанды, Елек–Орал, Рубцовск–Риддер", "1928–1932 жылдар"], correct: 3 },
+            { id: 124, section: 4, q: "Индустрияландырудың екінші бесжылдығы қай жылдарды қамтыды?", options: ["Орталық Қазақстан", "Шикізат өндіру", "1933–1937 жылдар", "Ірі, ауыр өнеркәсіпті құру және дамыту"], correct: 2 },
+            { id: 125, section: 4, q: "Бірінші бесжылдықта Қазақстанда қандай ірі нысандар салынды?", options: ["Ірі теміржолдар, Қарағанды полиметалл комбинаттары және Қарағанды көмір кені", "1927 жылы", "Шикізат өндіруге", "И.С. Курнаков"], correct: 0 },
+            { id: 126, section: 4, q: "Индустрияландыру жылдарында Қазақстанда электр станцияларының қуаты қанша есе артты?", options: ["40 есеге", "Ауыл шаруашылығы есебінен", "И.С. Курнаков", "Ақмола–Қарағанды, Елек–Орал, Рубцовск–Риддер"], correct: 0 },
+            { id: 127, section: 4, q: "1930 жылдары Қазақстанның индустрияландырудағы негізгі мамандануы қандай болды?", options: ["И. Голощёкин", "Шикізат өндіру", "1927 жылы", "Ақмоламен"], correct: 1 },
+            { id: 128, section: 4, q: "Қазақстандағы геологиялық зерттеулерге үлес қосқан академик кім?", options: ["Ақмола–Қарағанды, Елек–Орал, Рубцовск–Риддер", "И.С. Курнаков", "40 есеге", "Ірі, ауыр өнеркәсіпті құру және дамыту"], correct: 1 },
+            { id: 129, section: 4, q: "И.С. Курнаков зерттеген аймақ қалай аталды?", options: ["1925 жылы партияның XIV съезінде", "Орталық Қазақстан", "Ірі, ауыр өнеркәсіпті құру және дамыту", "Шикізат өндіру"], correct: 1 },
+            { id: 130, section: 4, q: "Қарағанды көмір бассейнін зерттеген ғалым кім?", options: ["Шикізат өндіруге", "И. Голощёкин", "1931 жылы", "И.М. Губкин"], correct: 3 },
+            { id: 131, section: 4, q: "Балқаш мыс кенінің болашағын зерттеген ғалым кім?", options: ["Қ.И. Сәтбаев", "Ірі теміржолдар, Қарағанды полиметалл комбинаттары және Қарағанды көмір кені", "Ақмола–Қарағанды, Елек–Орал, Рубцовск–Риддер", "Балқаш мыс балқыту, Шымкент қорғасын зауыты, Жезқазған, Қамбар және Алматы ет комбинаты"], correct: 0 },
+            { id: 132, section: 4, q: "Қазақстанның индустрияландыру жылдарындағы жетекші қайраткерлерінің бірі кім болды?", options: ["Ақмоламен", "Шикізат өндіру", "1933–1937 жылдар", "И. Голощёкин"], correct: 3 },
+            { id: 133, section: 4, q: "Қазақстанда индустрияландыру нәтижесінде қандай жаңа өндіріс орындары ашылды?", options: ["Балқаш мыс балқыту, Шымкент қорғасын зауыты, Жезқазған, Қамбар және Алматы ет комбинаты", "КСРО-ны аграрлық елден жетекші индустриялық державаға айналдыру", "700 кәсіпорын", "Тұрар Рысқұлов"], correct: 0 },
+            { id: 134, section: 4, q: "Екінші бесжылдықта Қазақстанда қанша жаңа кәсіпорын салынды?", options: ["700 кәсіпорын", "40 есеге", "Қарағанды–Балқаш", "1927–1931 жылдары"], correct: 0 },
+            { id: 135, section: 4, q: "Индустрияландыруға қажетті жұмысшы күшінің негізгі көзі қандай болды?", options: ["Ауыл шаруашылығы есебінен", "Шикізат өндіруге", "Ақмола–Қарағанды, Елек–Орал, Рубцовск–Риддер", "700 кәсіпорын"], correct: 0 }
+        ];
+
+        const SECTIONS = [
+            { id: 0, title: "Барлық сұрақтар", range: "1–135 сұрақтар", count: 135, icon: "ph-stack" },
+            { id: 1, title: "I бөлім: Қазақстандағы ұлттық автономиялар", range: "1–39 сұрақтар", count: 39, icon: "ph-flag" },
+            { id: 2, title: "II бөлім: Қазақ АКСР-інің құрылуы және аумақтық қалыптасуы", range: "40–76 сұрақтар", count: 37, icon: "ph-map-trifold" },
+            { id: 3, title: "III бөлім: «Әскери коммунизм», ашаршылық және ЖЭС", range: "77–110 сұрақтар", count: 34, icon: "ph-scales" },
+            { id: 4, title: "IV бөлім: Қазақстандағы индустрияландыру", range: "111–135 сұрақтар", count: 25, icon: "ph-factory" }
+        ];
+
+        const SECTION_SHORT_NAMES = {
+            1: "I бөлім • Ұлттық автономиялар",
+            2: "II бөлім • Қазақ АКСР-і",
+            3: "III бөлім • Әскери коммунизм және ЖЭС",
+            4: "IV бөлім • Индустрияландыру"
+        };
+
+        const LETTERS = ["A", "B", "C", "D"];
+
+        // =========================================================================
+        // 2. ҚОСЫМШАНЫҢ КҮЙІ (STATE)
+        // =========================================================================
+        let state = {
+            selectedSection: 0,
+            mode: 'practice', // 'practice' | 'exam'
+            shuffleQ: false,
+            shuffleO: false,
+            activeQuestions: [],
+            currentIndex: 0,
+            userAnswers: {}, // { index: selectedOptionIndex }
+            timerInterval: null,
+            secondsElapsed: 0,
+            lastReviewFilter: 'all'
+        };
+
+        // =========================================================================
+        // 3. БАСТАПҚЫ БЕТТІ ҚҰРУ (INITIALIZATION)
+        // =========================================================================
+        function initHome() {
+            const listEl = document.getElementById('sectionList');
+            listEl.innerHTML = SECTIONS.map(sec => `
+                <label class="block cursor-pointer">
+                    <input type="radio" name="sectionSelect" value="${sec.id}" class="peer sr-only" ${sec.id === state.selectedSection ? 'checked' : ''} onchange="selectSection(${sec.id})">
+                    <div class="p-4 rounded-xl border-2 border-slate-200 peer-checked:border-kzBlue-600 peer-checked:bg-kzBlue-50/50 hover:border-slate-300 transition flex items-center justify-between gap-3">
+                        <div class="flex items-center gap-3.5">
+                            <div class="w-10 h-10 rounded-xl bg-slate-100 text-slate-600 peer-checked:bg-kzBlue-600 flex items-center justify-center text-xl shrink-0 transition">
+                                <i class="ph-duotone ${sec.icon}"></i>
+                            </div>
+                            <div>
+                                <div class="font-bold text-slate-900 text-sm sm:text-base">${sec.title}</div>
+                                <div class="text-xs text-slate-500 mt-0.5">${sec.range}</div>
+                            </div>
+                        </div>
+                        <span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 font-bold text-xs shrink-0">
+                            ${sec.count} сұрақ
+                        </span>
+                    </div>
+                </label>
+            `).join('');
+        }
+
+        function selectSection(id) {
+            state.selectedSection = id;
+        }
+
+        // Utility: Fisher-Yates shuffle
+        function shuffleArray(arr) {
+            const copy = [...arr];
+            for (let i = copy.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [copy[i], copy[j]] = [copy[j], copy[i]];
+            }
+            return copy;
+        }
+
+        // =========================================================================
+        // 4. ТЕСТТІ БАСТАУ ЖӘНЕ БАСҚАРУ
+        // =========================================================================
+        function startQuiz(customQuestions = null) {
+            // Read settings
+            if (!customQuestions) {
+                const modeRadio = document.querySelector('input[name="quizMode"]:checked');
+                state.mode = modeRadio ? modeRadio.value : 'practice';
+                state.shuffleQ = document.getElementById('shuffleQuestions').checked;
+                state.shuffleO = document.getElementById('shuffleOptions').checked;
+
+                let filtered = state.selectedSection === 0
+                    ? [...ALL_QUESTIONS]
+                    : ALL_QUESTIONS.filter(q => q.section === state.selectedSection);
+
+                if (state.shuffleQ) {
+                    filtered = shuffleArray(filtered);
+                }
+
+                // Prepare options (with optional shuffling while tracking correct answer)
+                state.activeQuestions = filtered.map(item => {
+                    let optsWithFlag = item.options.map((text, idx) => ({
+                        text,
+                        isCorrect: idx === item.correct
+                    }));
+                    if (state.shuffleO) {
+                        optsWithFlag = shuffleArray(optsWithFlag);
+                    }
+                    const newCorrectIdx = optsWithFlag.findIndex(o => o.isCorrect);
+                    return {
+                        id: item.id,
+                        section: item.section,
+                        q: item.q,
+                        options: optsWithFlag.map(o => o.text),
+                        correct: newCorrectIdx
+                    };
+                });
+            } else {
+                state.activeQuestions = customQuestions;
+            }
+
+            state.currentIndex = 0;
+            state.userAnswers = {};
+            state.secondsElapsed = 0;
+
+            // Update UI headers
+            const secObj = SECTIONS.find(s => s.id === state.selectedSection);
+            document.getElementById('sectionTitleDisplay').textContent = customQuestions
+                ? "Қатемен жұмыс"
+                : (secObj ? secObj.title : "Тест");
+
+            const badge = document.getElementById('quizBadge');
+            const timerBox = document.getElementById('timerBox');
+            const legendCorrect = document.getElementById('legendCorrect');
+            const legendWrong = document.getElementById('legendWrong');
+            const legendAnswered = document.getElementById('legendAnswered');
+
+            clearInterval(state.timerInterval);
+
+            if (state.mode === 'exam') {
+                badge.textContent = "Емтихан режимі";
+                badge.className = "px-3 py-1 rounded-lg text-xs font-bold bg-amber-100 text-amber-800";
+                timerBox.classList.remove('hidden');
+                timerBox.classList.add('flex');
+                document.getElementById('timerText').textContent = "00:00";
+
+                legendCorrect.classList.add('hidden');
+                legendWrong.classList.add('hidden');
+                legendAnswered.classList.remove('hidden');
+                legendAnswered.classList.add('flex');
+
+                state.timerInterval = setInterval(() => {
+                    state.secondsElapsed++;
+                    document.getElementById('timerText').textContent = formatTime(state.secondsElapsed);
+                }, 1000);
+            } else {
+                badge.textContent = "Жаттығу режимі";
+                badge.className = "px-3 py-1 rounded-lg text-xs font-bold bg-kzBlue-100 text-kzBlue-800";
+                timerBox.classList.add('hidden');
+                timerBox.classList.remove('flex');
+
+                legendCorrect.classList.remove('hidden');
+                legendWrong.classList.remove('hidden');
+                legendAnswered.classList.add('hidden');
+                legendAnswered.classList.remove('flex');
+            }
+
+            // Switch screens
+            showScreen('quizScreen');
+            renderQuestionGrid();
+            renderQuestion();
+        }
+
+        function formatTime(totalSeconds) {
+            const mins = Math.floor(totalSeconds / 60).toString().padStart(2, '0');
+            const secs = (totalSeconds % 60).toString().padStart(2, '0');
+            return `${mins}:${secs}`;
+        }
+
+        function renderQuestion() {
+            const total = state.activeQuestions.length;
+            const idx = state.currentIndex;
+            const qObj = state.activeQuestions[idx];
+            const userAns = state.userAnswers[idx];
+            const isAnswered = userAns !== undefined;
+
+            // Update counters & progress
+            document.getElementById('currentNumText').textContent = idx + 1;
+            document.getElementById('totalNumText').textContent = total;
+            document.getElementById('originalQNum').textContent = `Базадағы №${qObj.id} сұрақ`;
+            document.getElementById('questionCategoryTag').textContent = SECTION_SHORT_NAMES[qObj.section] || "";
+            document.getElementById('questionText').textContent = `${idx + 1}. ${qObj.q}`;
+
+            const answeredCount = Object.keys(state.userAnswers).length;
+            document.getElementById('answeredCountBadge').textContent = `${answeredCount} / ${total}`;
+            document.getElementById('progressBar').style.width = `${(answeredCount / total) * 100}%`;
+
+            // Render Options
+            const container = document.getElementById('optionsContainer');
+            container.innerHTML = qObj.options.map((optText, optIdx) => {
+                let btnStyle = "border-slate-200 bg-white hover:border-kzBlue-400 hover:bg-kzBlue-50/30 text-slate-800";
+                let letterStyle = "bg-slate-100 text-slate-600";
+                let statusIcon = "";
+
+                if (state.mode === 'practice' && isAnswered) {
+                    if (optIdx === qObj.correct) {
+                        btnStyle = "border-emerald-500 bg-emerald-50 text-emerald-950 font-semibold";
+                        letterStyle = "bg-emerald-500 text-white";
+                        statusIcon = `<i class="ph-fill ph-check-circle text-emerald-600 text-xl ml-auto shrink-0"></i>`;
+                    } else if (optIdx === userAns) {
+                        btnStyle = "border-rose-500 bg-rose-50 text-rose-950";
+                        letterStyle = "bg-rose-500 text-white";
+                        statusIcon = `<i class="ph-fill ph-x-circle text-rose-600 text-xl ml-auto shrink-0"></i>`;
+                    } else {
+                        btnStyle = "border-slate-200 bg-slate-50/60 text-slate-400 opacity-75";
+                    }
+                } else if (state.mode === 'exam' && userAns === optIdx) {
+                    btnStyle = "border-kzBlue-600 bg-kzBlue-50 text-kzBlue-950 font-semibold shadow-xs";
+                    letterStyle = "bg-kzBlue-600 text-white";
+                    statusIcon = `<i class="ph-fill ph-radio-button text-kzBlue-600 text-xl ml-auto shrink-0"></i>`;
+                }
+
+                const disabledAttr = (state.mode === 'practice' && isAnswered) ? 'disabled' : '';
+
+                return `
+                    <button onclick="selectOption(${optIdx})" ${disabledAttr}
+                        class="w-full text-left p-3.5 sm:p-4 rounded-xl border-2 transition flex items-center gap-3.5 ${btnStyle}">
+                        <span class="w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm shrink-0 transition ${letterStyle}">
+                            ${LETTERS[optIdx]}
+                        </span>
+                        <span class="text-sm sm:text-base leading-snug">${optText}</span>
+                        ${statusIcon}
+                    </button>
+                `;
+            }).join('');
+
+            // Feedback box for practice mode
+            const feedbackBox = document.getElementById('feedbackBox');
+            if (state.mode === 'practice' && isAnswered) {
+                const isCorrect = userAns === qObj.correct;
+                feedbackBox.classList.remove('hidden', 'bg-emerald-50', 'border-emerald-200', 'text-emerald-800', 'bg-rose-50', 'border-rose-200', 'text-rose-800');
+                if (isCorrect) {
+                    feedbackBox.classList.add('bg-emerald-50', 'border-emerald-200', 'text-emerald-800');
+                    document.getElementById('feedbackIcon').className = "ph-fill ph-check-circle text-emerald-600 text-xl mt-0.5";
+                    document.getElementById('feedbackTitle').textContent = "Дұрыс жауап!";
+                    document.getElementById('feedbackDesc').textContent = "Жарайсыз, тарихи деректі дәл таптыңыз.";
+                } else {
+                    feedbackBox.classList.add('bg-rose-50', 'border-rose-200', 'text-rose-800');
+                    document.getElementById('feedbackIcon').className = "ph-fill ph-x-circle text-rose-600 text-xl mt-0.5";
+                    document.getElementById('feedbackTitle').textContent = "Қате жауап!";
+                    document.getElementById('feedbackDesc').textContent = `Дұрыс нұсқа: ${LETTERS[qObj.correct]}) ${qObj.options[qObj.correct]}`;
+                }
+            } else {
+                feedbackBox.classList.add('hidden');
+            }
+
+            // Prev / Next buttons
+            document.getElementById('prevBtn').disabled = idx === 0;
+            const nextBtn = document.getElementById('nextBtn');
+            if (idx === total - 1) {
+                nextBtn.innerHTML = `<span>Аяқтау</span> <i class="ph-bold ph-check"></i>`;
+                nextBtn.className = "px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm shadow-sm transition flex items-center gap-2";
+            } else {
+                nextBtn.innerHTML = `<span>Келесі</span> <i class="ph-bold ph-arrow-right"></i>`;
+                nextBtn.className = "px-5 py-2.5 rounded-xl bg-kzBlue-600 hover:bg-kzBlue-700 text-white font-semibold text-sm shadow-sm transition flex items-center gap-2";
+            }
+
+            updateGridHighlight();
+        }
+
+        function selectOption(optIdx) {
+            const idx = state.currentIndex;
+            if (state.mode === 'practice' && state.userAnswers[idx] !== undefined) {
+                return; // Prevent changing answer in practice mode
+            }
+            state.userAnswers[idx] = optIdx;
+            renderQuestion();
+        }
+
+        function prevQuestion() {
+            if (state.currentIndex > 0) {
+                state.currentIndex--;
+                renderQuestion();
+            }
+        }
+
+        function nextQuestion() {
+            if (state.currentIndex < state.activeQuestions.length - 1) {
+                state.currentIndex++;
+                renderQuestion();
+            } else {
+                openFinishModal();
+            }
+        }
+
+        function jumpToQuestion(idx) {
+            state.currentIndex = idx;
+            renderQuestion();
+        }
+
+        function renderQuestionGrid() {
+            const grid = document.getElementById('questionGrid');
+            grid.innerHTML = state.activeQuestions.map((_, idx) => `
+                <button id="gridBtn_${idx}" onclick="jumpToQuestion(${idx})"
+                    class="h-9 rounded-lg text-xs font-bold border transition flex items-center justify-center">
+                    ${idx + 1}
+                </button>
+            `).join('');
+            updateGridHighlight();
+        }
+
+        function updateGridHighlight() {
+            state.activeQuestions.forEach((qObj, idx) => {
+                const btn = document.getElementById(`gridBtn_${idx}`);
+                if (!btn) return;
+                const ans = state.userAnswers[idx];
+                const isCurrent = idx === state.currentIndex;
+
+                let cls = "bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100";
+
+                if (ans !== undefined) {
+                    if (state.mode === 'practice') {
+                        cls = ans === qObj.correct
+                            ? "bg-emerald-500 border-emerald-600 text-white"
+                            : "bg-rose-500 border-rose-600 text-white";
+                    } else {
+                        cls = "bg-sky-100 border-sky-400 text-sky-900";
+                    }
+                }
+
+                if (isCurrent) {
+                    cls += " ring-2 ring-kzBlue-600 ring-offset-1 font-extrabold";
+                    if (ans === undefined) {
+                        cls = "bg-kzBlue-600 border-kzBlue-700 text-white ring-2 ring-kzBlue-600 ring-offset-1";
+                    }
+                }
+
+                btn.className = `h-9 rounded-lg text-xs font-bold border transition flex items-center justify-center ${cls}`;
+            });
+        }
+
+        // =========================================================================
+        // 5. ТЕСТТІ АЯҚТАУ ЖӘНЕ НӘТИЖЕЛЕР
+        // =========================================================================
+        function openFinishModal() {
+            const total = state.activeQuestions.length;
+            const answered = Object.keys(state.userAnswers).length;
+            const modalMsg = document.getElementById('modalMessage');
+
+            if (answered < total) {
+                modalMsg.textContent = `Сіз ${total} сұрақтың ${answered}-іне ғана жауап бердіңіз (${total - answered} сұрақ жауапсыз қалды). Тестті қазір аяқтағыңыз келе ме?`;
+            } else {
+                modalMsg.textContent = "Сіз барлық сұрақтарға жауап бердіңіз. Нәтижені көру үшін тестті аяқтайсыз ба?";
+            }
+            document.getElementById('finishModal').classList.remove('hidden');
+        }
+
+        function closeFinishModal() {
+            document.getElementById('finishModal').classList.add('hidden');
+        }
+
+        function confirmFinishQuiz() {
+            closeFinishModal();
+            clearInterval(state.timerInterval);
+            calculateAndShowResults();
+        }
+
+        function calculateAndShowResults() {
+            const total = state.activeQuestions.length;
+            let correctCount = 0;
+
+            state.activeQuestions.forEach((qObj, idx) => {
+                if (state.userAnswers[idx] === qObj.correct) {
+                    correctCount++;
+                }
+            });
+
+            const wrongCount = total - correctCount;
+            const percent = total > 0 ? Math.round((correctCount / total) * 100) : 0;
+
+            document.getElementById('statScore').textContent = `${correctCount} / ${total}`;
+            document.getElementById('statPercent').textContent = `${percent}%`;
+            document.getElementById('statCorrect').textContent = correctCount;
+            document.getElementById('statWrong').textContent = wrongCount;
+
+            // Icon & message based on score
+            const iconWrap = document.getElementById('resultIconWrapper');
+            const sub = document.getElementById('resultSubtitle');
+            if (percent >= 85) {
+                iconWrap.className = "w-20 h-20 rounded-2xl mx-auto mb-4 flex items-center justify-center text-4xl shadow-sm bg-emerald-100 text-emerald-600";
+                iconWrap.innerHTML = `<i class="ph-fill ph-trophy"></i>`;
+                sub.textContent = "Керемет нәтиже! Тақырыпты өте жақсы меңгергенсіз.";
+            } else if (percent >= 60) {
+                iconWrap.className = "w-20 h-20 rounded-2xl mx-auto mb-4 flex items-center justify-center text-4xl shadow-sm bg-kzBlue-100 text-kzBlue-600";
+                iconWrap.innerHTML = `<i class="ph-fill ph-medal"></i>`;
+                sub.textContent = "Жақсы нәтиже! Қателермен жұмыс жасап, біліміңізді одан әрі жетілдіріңіз.";
+            } else {
+                iconWrap.className = "w-20 h-20 rounded-2xl mx-auto mb-4 flex items-center justify-center text-4xl shadow-sm bg-amber-100 text-amber-600";
+                iconWrap.innerHTML = `<i class="ph-fill ph-book-bookmark"></i>`;
+                sub.textContent = "Қосымша дайындық қажет. Қате сұрақтарды қайта тапсырып көріңіз.";
+            }
+
+            // Time display for Exam mode
+            const timeBanner = document.getElementById('timeTakenBanner');
+            if (state.mode === 'exam') {
+                timeBanner.classList.remove('hidden');
+                timeBanner.classList.add('inline-flex');
+                document.getElementById('finalTimeText').textContent = formatTime(state.secondsElapsed);
+            } else {
+                timeBanner.classList.add('hidden');
+                timeBanner.classList.remove('inline-flex');
+            }
+
+            // Retry Wrong Button
+            const retryBtn = document.getElementById('retryWrongBtn');
+            if (wrongCount > 0) {
+                retryBtn.classList.remove('hidden');
+                retryBtn.classList.add('flex');
+                document.getElementById('wrongCountBtn').textContent = wrongCount;
+            } else {
+                retryBtn.classList.add('hidden');
+                retryBtn.classList.remove('flex');
+            }
+
+            showScreen('resultScreen');
+            filterReview('all');
+        }
+
+        function filterReview(type) {
+            state.lastReviewFilter = type;
+            const allBtn = document.getElementById('filterAllBtn');
+            const wrongBtn = document.getElementById('filterWrongBtn');
+
+            if (type === 'all') {
+                allBtn.className = "px-3 py-1.5 rounded-lg text-xs font-bold bg-kzBlue-600 text-white transition";
+                wrongBtn.className = "px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition";
+            } else {
+                wrongBtn.className = "px-3 py-1.5 rounded-lg text-xs font-bold bg-rose-600 text-white transition";
+                allBtn.className = "px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 transition";
+            }
+
+            const container = document.getElementById('reviewContainer');
+            const items = state.activeQuestions.map((qObj, idx) => ({
+                qObj,
+                idx,
+                userAns: state.userAnswers[idx],
+                isCorrect: state.userAnswers[idx] === qObj.correct
+            })).filter(item => type === 'all' ? true : !item.isCorrect);
+
+            if (items.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-8 text-slate-500 text-sm">
+                        <i class="ph-duotone ph-confetti text-4xl text-emerald-500 mb-2 block"></i>
+                        Қате жауаптар жоқ! Барлық сұраққа дұрыс жауап бердіңіз.
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = items.map(({ qObj, idx, userAns, isCorrect }) => {
+                const borderClass = isCorrect ? "border-emerald-200 bg-emerald-50/20" : "border-rose-200 bg-rose-50/20";
+                const statusBadge = isCorrect
+                    ? `<span class="px-2.5 py-0.5 rounded-md text-xs font-bold bg-emerald-100 text-emerald-700 flex items-center gap-1"><i class="ph-bold ph-check"></i> Дұрыс</span>`
+                    : `<span class="px-2.5 py-0.5 rounded-md text-xs font-bold bg-rose-100 text-rose-700 flex items-center gap-1"><i class="ph-bold ph-x"></i> ${userAns === undefined ? 'Жауап берілмеген' : 'Қате'}</span>`;
+
+                const userAnsText = userAns !== undefined
+                    ? `${LETTERS[userAns]}) ${qObj.options[userAns]}`
+                    : "Белгіленбеген";
+
+                return `
+                    <div class="p-4 sm:p-5 rounded-xl border ${borderClass}">
+                        <div class="flex items-start justify-between gap-3 mb-2">
+                            <span class="text-xs font-bold text-slate-400">Сұрақ №${idx + 1} (Базада №${qObj.id})</span>
+                            ${statusBadge}
+                        </div>
+                        <p class="font-bold text-slate-900 text-sm sm:text-base mb-3">${qObj.q}</p>
+                        <div class="space-y-1.5 text-xs sm:text-sm">
+                            ${!isCorrect ? `
+                                <div class="p-2.5 rounded-lg bg-rose-100/70 text-rose-900 flex items-start gap-2">
+                                    <span class="font-bold shrink-0">Сіздің жауабыңыз:</span>
+                                    <span>${userAnsText}</span>
+                                </div>
+                            ` : ''}
+                            <div class="p-2.5 rounded-lg bg-emerald-100/80 text-emerald-950 flex items-start gap-2">
+                                <span class="font-bold shrink-0">Дұрыс жауап:</span>
+                                <span>${LETTERS[qObj.correct]}) ${qObj.options[qObj.correct]}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function retryWrongQuestions() {
+            const wrongList = state.activeQuestions.filter((qObj, idx) => state.userAnswers[idx] !== qObj.correct);
+            if (wrongList.length > 0) {
+                startQuiz(wrongList);
+            }
+        }
+
+        function restartSameQuiz() {
+            startQuiz();
+        }
+
+        function goHome() {
+            clearInterval(state.timerInterval);
+            showScreen('homeScreen');
+        }
+
+        function showScreen(screenId) {
+            ['homeScreen', 'quizScreen', 'resultScreen'].forEach(id => {
+                document.getElementById(id).classList.add('hidden');
+            });
+            document.getElementById(screenId).classList.remove('hidden');
+
+            const homeBtn = document.getElementById('homeBtn');
+            if (screenId === 'homeScreen') {
+                homeBtn.classList.add('hidden');
+            } else {
+                homeBtn.classList.remove('hidden');
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Start app
+        window.onload = initHome;
+    </script>
+</body>
+</html>
